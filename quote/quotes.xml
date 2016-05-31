@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<quotes>
+  <id>1
+    <text>this is a quote</text>
+    <author>author</author>
+    <year>2013</year>
+  </id>
+  
+  <id>2
+    <text>this is another quote</text>
+    <author>author2</author>
+    <year>1990</year>
+  </id>
+</quotes>
+
+
+
+
