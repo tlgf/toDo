@@ -9,23 +9,40 @@ author: t flynn
 
 import xml.etree.ElementTree as etree
 from random import randint
+from termcolor import colored, cprint
+#import os
 
 class QuoteFinder:
-    def __init__(self):
+    def __init__(self, theQuotes, colorMode):
+        if colorMode != ("on" or "off"):
+            print "color Mode not initialised. exit"
+            exit()
+        self.colorMode = colorMode
         self.outputQuote = []
-        self.quoteStoreLocation = './quotes.xml'
+        self.quoteStoreLocation = theQuotes
         self.quoteFile = etree.parse(self.quoteStoreLocation)
         self.theQuotes = self.quoteFile.getroot()
         self.numberOfQuotes = len(self.theQuotes)
         self.randomQuoteID = randint(0, self.numberOfQuotes)
+        
 
+    def colorModeOn(self):
+        if self.colorMode == "on":
+            return True
 
+        return False
+    
     def printGivenQuote(self, quoteID):
         for row in range(0,3):
             self.outputQuote.append(self.theQuotes[quoteID][row].text)
 
         for row in self.outputQuote:
+            if self.colorModeOn():
+                print(colored(row, 'red', attrs=['bold', 'blink']))
+            else:
                 print(row)
+        return
+            
         
     def getQuote(self, aQuoteID):
         #aQuoteID = self.randomQuoteID
@@ -35,15 +52,22 @@ class QuoteFinder:
 
     def printRandomQuote(self):
         randomQuote = self.getQuote(self.randomQuoteID)
-        for row in randomQuote:
-            print(row)
+       # for row in randomQuote:
+        #    print(row)
+        for row in self.outputQuote:
+            if self.colorModeOn():
+                print(colored(row, 'red', attrs=['bold', 'blink']))
+            else:
+                print(row)
+        return
 
     def printAllQuotes(self):
-        print( "Number of Quotes:" , self.numberOfQuotes)
+        print "Number of Quotes:", self.numberOfQuotes
 
         for quoteID in range(0, self.numberOfQuotes):
             for quotePiece in range(0,3):
-                print self.theQuotes[quoteID][quotePiece].text
+                print(colored(self.theQuotes[quoteID][quotePiece].text,'red', attrs=['bold', 'blink']))
+        return
         
     def addNewQuote(self, theQuote, theAuthor, theYear):
         ID = len(self.theQuotes) + 1
@@ -52,15 +76,15 @@ class QuoteFinder:
         '''
 
 def main():
-       
+
     selection = int(raw_input("Enter 1 for a random quote, 2 to print all quotes \n"))
 
-    quotes = QuoteFinder()
+    quotes = QuoteFinder('./quotes.xml', "on")
 
     if selection == 1:
         quotes.printRandomQuote()
         exit()
-        
+    
     elif selection == 2:
         quotes.printAllQuotes()
         exit()
