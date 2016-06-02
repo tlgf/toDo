@@ -23,13 +23,12 @@ class QuoteFinder:
         self.quoteFile = etree.parse(self.quoteStoreLocation)
         self.theQuotes = self.quoteFile.getroot()
         self.numberOfQuotes = len(self.theQuotes)
-        self.randomQuoteID = randint(0, self.numberOfQuotes)
+        self.randomQuoteID = randint(0, self.numberOfQuotes - 1)
         
 
     def colorModeOn(self):
         if self.colorMode == "on":
             return True
-
         return False
     
     def printGivenQuote(self, quoteID):
@@ -38,7 +37,7 @@ class QuoteFinder:
 
         for row in self.outputQuote:
             if self.colorModeOn():
-                print(colored(row, 'red', attrs=['bold', 'blink']))
+                print(colored(row, 'red', attrs=['blink']))
             else:
                 print(row)
         return
@@ -52,11 +51,9 @@ class QuoteFinder:
 
     def printRandomQuote(self):
         randomQuote = self.getQuote(self.randomQuoteID)
-       # for row in randomQuote:
-        #    print(row)
         for row in self.outputQuote:
             if self.colorModeOn():
-                print(colored(row, 'red', attrs=['bold', 'blink']))
+                print(colored(row, 'red', attrs=['blink']))
             else:
                 print(row)
         return
@@ -77,7 +74,7 @@ class QuoteFinder:
 
 def main():
 
-    selection = int(raw_input("Enter 1 for a random quote, 2 to print all quotes \n"))
+    selection = int(raw_input("Enter 1 for a random quote, 2 to print all quotes, 3 for a new quote \n"))
 
     quotes = QuoteFinder('./quotes.xml', "on")
 
